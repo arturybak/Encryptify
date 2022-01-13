@@ -12,9 +12,12 @@
 		0F46E523274EA4F300912479 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F46E522274EA4F300912479 /* Assets.xcassets */; };
 		0F46E526274EA4F300912479 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F46E525274EA4F300912479 /* Preview Assets.xcassets */; };
 		0F46E531274EAA4800912479 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46E530274EAA4800912479 /* MessageView.swift */; };
-		0F46E535274EB3CB00912479 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46E534274EB3CB00912479 /* ChatView.swift */; };
+		0F46E535274EB3CB00912479 /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46E534274EB3CB00912479 /* ConversationView.swift */; };
 		0F7DBBA2274FAC8100F50EA9 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0F7DBBA0274FAC8100F50EA9 /* Main.xcdatamodeld */; };
 		0F7DBBCB274FB64D00F50EA9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7DBBCA274FB64D00F50EA9 /* Persistence.swift */; };
+		0F8ADCD72790899900172A22 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCD62790899900172A22 /* ChatView.swift */; };
+		0F8ADCD927908AD200172A22 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCD827908AD200172A22 /* UserViewModel.swift */; };
+		0F8ADCDB2790B82000172A22 /* UserRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,9 +27,12 @@
 		0F46E522274EA4F300912479 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F46E525274EA4F300912479 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0F46E530274EAA4800912479 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
-		0F46E534274EB3CB00912479 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		0F46E534274EB3CB00912479 /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		0F7DBBA1274FAC8100F50EA9 /* Conversations.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Conversations.xcdatamodel; sourceTree = "<group>"; };
 		0F7DBBCA274FB64D00F50EA9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		0F8ADCD62790899900172A22 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		0F8ADCD827908AD200172A22 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistrationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,9 +67,12 @@
 			children = (
 				0F7DBBA0274FAC8100F50EA9 /* Main.xcdatamodeld */,
 				0F46E530274EAA4800912479 /* MessageView.swift */,
-				0F46E534274EB3CB00912479 /* ChatView.swift */,
+				0F46E534274EB3CB00912479 /* ConversationView.swift */,
+				0F8ADCD62790899900172A22 /* ChatView.swift */,
+				0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */,
 				0F46E51E274EA4F100912479 /* EncryptifyApp.swift */,
 				0F7DBBCA274FB64D00F50EA9 /* Persistence.swift */,
+				0F8ADCD827908AD200172A22 /* UserViewModel.swift */,
 				0F46E520274EA4F100912479 /* ContentMessageView.swift */,
 				0F46E522274EA4F300912479 /* Assets.xcassets */,
 				0F46E524274EA4F300912479 /* Preview Content */,
@@ -150,9 +159,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F7DBBA2274FAC8100F50EA9 /* Main.xcdatamodeld in Sources */,
+				0F8ADCD927908AD200172A22 /* UserViewModel.swift in Sources */,
 				0F7DBBCB274FB64D00F50EA9 /* Persistence.swift in Sources */,
 				0F46E521274EA4F100912479 /* ContentMessageView.swift in Sources */,
-				0F46E535274EB3CB00912479 /* ChatView.swift in Sources */,
+				0F46E535274EB3CB00912479 /* ConversationView.swift in Sources */,
+				0F8ADCD72790899900172A22 /* ChatView.swift in Sources */,
+				0F8ADCDB2790B82000172A22 /* UserRegistrationView.swift in Sources */,
 				0F46E51F274EA4F100912479 /* EncryptifyApp.swift in Sources */,
 				0F46E531274EAA4800912479 /* MessageView.swift in Sources */,
 			);

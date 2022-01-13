@@ -11,7 +11,7 @@ import CoreData
 struct MessageView : View {
     var currentMessage: Message
     var body: some View {
-        HStack() {
+        HStack(alignment: .bottom, spacing: 10) {
             if !currentMessage.user!.isCurrentUser {
                 Image(currentMessage.user!.avatar ?? "default")
                     .resizable()
@@ -23,7 +23,7 @@ struct MessageView : View {
             
             ContentMessageView(contentMessage: currentMessage.content!,
                                isCurrentUser: currentMessage.user!.isCurrentUser)
-                .padding(.horizontal, 7)
+                //.padding(.horizontal, 7)
         }
 
     }
@@ -41,7 +41,6 @@ struct MessageView_Previews: PreviewProvider {
         newMessage.id = UUID()
         newMessage.content = "Vestibulum euismod facilisis quam, at fermentum mi interdum varius"
         newMessage.user = user1
-
         
         return MessageView(currentMessage: newMessage)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

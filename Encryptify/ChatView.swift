@@ -2,74 +2,49 @@
 //  ChatView.swift
 //  Encryptify
 //
-//  Created by Artur Rybak on 24/11/2021.
+//  Created by Artur Rybak on 13/01/2022.
 //
 
 import SwiftUI
-import CoreData
 
 struct ChatView: View {
-    @State var typingMessage: String = ""
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
-    @FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
-
-    //@State var currentUser: User = users?.first(where: { $0.isCurrentUser == true})
-    
+    @State private var showingRegistrationForm = false
     var body: some View {
         NavigationView {
-            ScrollViewReader { proxy in
-                VStack {
-                    List {
-                        ForEach(messages) { msg in
-                            MessageView(currentMessage: msg)
-                                .listRowSeparator(.hidden)
-                        }
-                    }
-                    .listStyle(.plain)
-                    HStack {
-                        TextField("Write your message here", text: $typingMessage)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            //.frame(minHeight: CGFloat(30))
-//                            .onTapGesture {
-//                                proxy.scrollTo(chatHelper.realTimeMessages[chatHelper.realTimeMessages.endIndex - 1])
-//                            }
-
-                        Button(action: sendMessage) {
-                            Text("Send")
-                        }
-                        
-                    }
-                    .frame(minHeight: CGFloat(30)).padding()
-                //}.navigationBarTitle(Text((users.first(where: { $0.isCurrentUser == true})?.name)!), displayMode: .inline)
-                }.navigationBarTitle(Text("Artur Rybka"), displayMode: .inline)
-
+            VStack {
+                Text("First time?")
+                    .font(.title)
+                    .padding(.bottom, 10.0)
+                Button(action: {showingRegistrationForm.toggle()}) {Text("Sign In").font(.title)}
+                .buttonStyle(GradientButtonStyle())
             }
-//            .padding(.bottom, keyboard.currentHeight)
-//            .edgesIgnoringSafeArea(keyboard.currentHeight == 0.0 ? .leading: .bottom)
-//        }.onTapGesture {
-//                self.endEditing(true)
+            .navigationBarTitle(Text("Encryptify"), displayMode: .automatic)
+            .sheet(isPresented: $showingRegistrationForm) {
+                UserRegistrationView()
+            }
+
         }
-    }
-    
-    private func sendMessage() {
-        let newMessage = Message(context: viewContext)
-        newMessage.content = typingMessage
-        newMessage.user = users.first(where: { $0.isCurrentUser == true})
-        do {
-            try viewContext.save()
-            print("Message saved.")
-        } catch {
-            print(error.localizedDescription)
-        }
-        typingMessage = ""
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+
+
+
+
+
+struct GradientButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .foregroundColor(Color.white)
+            .padding()
+            .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.orange]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(15.0)
+            .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
+    }
+}
+
+struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
         ChatView()
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-        
     }
 }
