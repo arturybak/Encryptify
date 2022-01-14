@@ -19,10 +19,28 @@ struct ChatView: View {
         NavigationView {
             if userVM.users.isEmpty {
                 VStack {
+                    Spacer()
                     Text("First time?")
-                        .font(.title)
+                        .font(.title2)
+                    Button(action: {showingRegistrationForm.toggle()}) {Text("Sign In").font(.title).frame(maxWidth: .infinity)}
+                    .padding([.top, .leading, .trailing])
+                    .buttonStyle(GradientButtonStyle())
+
+                }
+                .navigationTitle(Text("Encryptify"))
+                .sheet(isPresented: $showingRegistrationForm, onDismiss: didDismiss) {
+                    UserRegistrationView(firstUser: true)
+                }
+
+            } else if (userVM.users.count == 1) {
+                VStack {
+                    Spacer()
+                    Text("Welcome \((userVM.currentUser?.name ?? userVM.users[0].name)!)!")
+                        .font(.title2)
                         .padding(.bottom, 10.0)
-                    Button(action: {showingRegistrationForm.toggle()}) {Text("Sign In").font(.title)}
+                    Spacer()
+                    Button(action: {showingRegistrationForm.toggle()}) {Text("Add your first Contact!").font(.title).frame(maxWidth: .infinity)}
+                    .padding([.top, .leading, .trailing])
                     .buttonStyle(GradientButtonStyle())
                 }
                 .navigationTitle(Text("Encryptify"))
@@ -30,30 +48,46 @@ struct ChatView: View {
                     UserRegistrationView()
                 }
 
-            } else if (userVM.users.count == 1) {
-                VStack {
-                    Text("Welcome \(userVM.currentUser ?? userVM.users[0])!")
-                        .font(.title)
-                        .padding(.bottom, 10.0)
-                    Button(action: {showingRegistrationForm.toggle()}) {Text("Add your first Contact!").font(.title)}
-                    .buttonStyle(GradientButtonStyle())
-                }
             } else {
-                List(userVM.users.filter {!$0.isCurrentUser}) { user in
-                    Text(user.name!)
+                VStack {
+                    List{
+                        ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
+                            NavigationLink(destination: Text(user.name!)) {
+                                Text(user.name!)
+                            }
+                        }.onDelete(perform: deleteUser)
+                    }
+                    Spacer()
+                    Button(action: {showingRegistrationForm.toggle()}) {Text("Add Contact").font(.title).frame(maxWidth: .infinity)}
+                    .padding([.top, .leading, .trailing])
+                    .buttonStyle(GradientButtonStyle())
+
                 }
                 .navigationTitle(Text("Encryptify"))
+                .sheet(isPresented: $showingRegistrationForm, onDismiss: didDismiss) {
+                    UserRegistrationView()
+                }
             }
 
         }
         .onAppear(perform: {
             userVM.getAllUsers()
+            userVM.getCurrentUser()
         })
 
     }
     
+    func deleteUser(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let user = userVM.users[index + 1] // because of filtering
+            userVM.delete(user)
+        }
+        userVM.getAllUsers()
+    }
+    
     func didDismiss() {
         userVM.getAllUsers()
+        userVM.getCurrentUser()
     }
 }
 

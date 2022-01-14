@@ -17,6 +17,7 @@ struct UserRegistrationView: View {
     @State private var showingImagePicker = false
     @State private var selectedPhoto: UIImage? = nil
     @State var userName = ""
+    var firstUser = false
     
     @ViewBuilder
     var body: some View {
@@ -53,16 +54,15 @@ struct UserRegistrationView: View {
 
                         }
                         Button(action: {
-                            print("Signed In \(userName)")
                             userVM.name = userName
                             userVM.image = selectedPhoto
-                            userVM.save(isSigningIn: true)
+                            userVM.save(isSigningIn: firstUser)
                             userVM.getCurrentUser()
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             HStack {
                                 Spacer()
-                                Text("Sign In")
+                                Text(firstUser ? "Sign In" : "Add Contact")
                                     .font(.title2)
                                 Spacer()
                             }

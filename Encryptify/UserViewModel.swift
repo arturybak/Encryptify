@@ -28,6 +28,10 @@ class UserViewModel: ObservableObject {
         currentUser = users.first(where: { $0.isCurrentUser == true})
     }
     
+    func delete(_ user: User){
+        PersistenceController.shared.deleteUser(user: user)
+    }
+    
     func save(isSigningIn: Bool = false) {
         let pickedAvatar = image!.jpegData(compressionQuality: 1.0)
         let user = User(context: PersistenceController.shared.viewContext)

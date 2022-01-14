@@ -25,7 +25,12 @@ struct PersistenceController {
             return []
         }
     }
-        
+    
+    func deleteUser(user: User) {
+        viewContext.delete(user)
+        save()
+    }
+    
     func save() {
         do {
             try viewContext.save()

@@ -10,9 +10,10 @@ import CoreData
 
 struct ConversationView: View {
     @State var typingMessage: String = ""
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
-    @FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
+//    @Environment(\.managedObjectContext) private var viewContext
+//    @FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
+//    @FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
+    var messages: [Message] = []
 
     
     var body: some View {
@@ -52,16 +53,16 @@ struct ConversationView: View {
     }
     
     private func sendMessage() {
-        let newMessage = Message(context: viewContext)
-        newMessage.content = typingMessage
-        newMessage.user = users.first(where: { $0.isCurrentUser == true})
-        do {
-            try viewContext.save()
-            print("Message saved.")
-        } catch {
-            print(error.localizedDescription)
-        }
-        typingMessage = ""
+//        let newMessage = Message(context: viewContext)
+//        newMessage.content = typingMessage
+//        newMessage.user = users.first(where: { $0.isCurrentUser == true})
+//        do {
+//            try viewContext.save()
+//            print("Message saved.")
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//        typingMessage = ""
     }
 }
 
