@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ChatView: View {
+    //@Environment(\.managedObjectContext) private var viewContext
+    //@FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
+    //@FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
+
     @State private var showingRegistrationForm = false
     var body: some View {
         NavigationView {

@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import UIKit
 
 struct PersistenceController {
     
@@ -55,12 +56,15 @@ struct PersistenceController {
         let user1 = User(context: viewContext)
         user1.name = "Violet Limes"
         user1.id = UUID()
-        user1.avatar = "girl"
+        let image1 = UIImage(named: "girl")
+        user1.avatar = image1!.jpegData(compressionQuality: 1.0)
+
         
         let user2 = User(context: viewContext)
         user2.name = "Artur Rybka"
         user2.id = UUID()
-        user2.avatar = "me"
+        let image2 = UIImage(named: "me")
+        user2.avatar = image2!.jpegData(compressionQuality: 1.0)
         user2.isCurrentUser = true
         
         for _ in 0..<4 {

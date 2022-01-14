@@ -10,9 +10,10 @@ import UIKit
 import PhotosUI
 
 struct UserRegistrationView: View {
-    @State var userName = ""
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @ObservedObject private var userVM = UserViewModel()
     @State private var showingImagePicker = false
-    @State private var selectedImage: UIImage? = nil
     
     @ViewBuilder
     var body: some View {
@@ -20,7 +21,7 @@ struct UserRegistrationView: View {
             VStack {
                 Form {
                     Section(header: Text("Contact Name")) {
-                        TextField("Name", text: $userName)
+                        TextField("Name", text: $userVM.name)
                     }
                     Section(header: Text("Avatar")) {
                             Button(action: {
@@ -30,11 +31,11 @@ struct UserRegistrationView: View {
                             //.buttonStyle(GradientButtonStyle())
                         
                     }
-                    if selectedImage != nil {
+                    if userVM.image != nil {
                         Section(header: Text("Chosen Image")) {
                             HStack {
                                 Spacer()
-                                Image(uiImage: selectedImage!)
+                                Image(uiImage: userVM.image!)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 200, height: 200)
@@ -49,7 +50,8 @@ struct UserRegistrationView: View {
 
                         }
                         Button(action: {
-                            print("Signed In \(userName)")
+                            print("Signed In \(userVM.name)")
+                            userVM.save(isSigningIn: true)
                         }) {
                             HStack {
                                 Spacer()
@@ -63,7 +65,7 @@ struct UserRegistrationView: View {
                         .background(K.Colors.gradient)
                         .cornerRadius(10)
                         .listRowBackground(Color.clear)
-                        .disabled(userName.isEmpty || selectedImage == nil)
+                        .disabled(userVM.name.isEmpty || userVM.image == nil)
                         
                     }
                         
@@ -81,8 +83,7 @@ struct UserRegistrationView: View {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         configuration.selectionLimit = 1
-        return PhotoPicker(configuration: configuration, showingImagePicker: $showingImagePicker, selectedPhoto: $selectedImage)
-
+        return PhotoPicker(configuration: configuration, showingImagePicker: $showingImagePicker, selectedPhoto: $userVM.image)
     }
 }
 
