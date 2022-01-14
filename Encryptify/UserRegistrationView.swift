@@ -12,36 +12,63 @@ import PhotosUI
 struct UserRegistrationView: View {
     @State var userName = ""
     @State private var showingImagePicker = false
-    @State private var selectedPhoto: UIImage? = nil
+    @State private var selectedImage: UIImage? = nil
     
     @ViewBuilder
     var body: some View {
         NavigationView {
             VStack {
                 Form {
-                    Section(header: Text("What's your name?")) {
+                    Section(header: Text("Contact Name")) {
                         TextField("Name", text: $userName)
                     }
                     Section(header: Text("Avatar")) {
-                        if selectedPhoto != nil {
-                            Image(uiImage: selectedPhoto!)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 200, height: 200)
-                        } else {
                             Button(action: {
                                 showingImagePicker.toggle()
 
-                            }) {Text("+").font(.title)}
+                            }) {Text("browse..").font(.headline)}
                             //.buttonStyle(GradientButtonStyle())
+                        
+                    }
+                    if selectedImage != nil {
+                        Section(header: Text("Chosen Image")) {
+                            HStack {
+                                Spacer()
+                                Image(uiImage: selectedImage!)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 200, height: 200)
+                                    .clipShape(Circle())
+                                    .overlay {
+                                        Circle().stroke(.white, lineWidth: 4)
+                                    }
+                                    .shadow(radius: 3)
+                                Spacer()
+                            }
+                            .listRowBackground(Color.clear)
+
                         }
+                        Button(action: {
+                            print("Signed In \(userName)")
+                        }) {
+                            HStack {
+                                Spacer()
+                                Text("Sign In")
+                                    .font(.title2)
+                                Spacer()
+                            }
+                        }
+                        .accentColor(.white)
+                        .padding(15)
+                        .background(K.Colors.gradient)
+                        .cornerRadius(10)
+                        .listRowBackground(Color.clear)
+                        .disabled(userName.isEmpty || selectedImage == nil)
+                        
                     }
-                    Button(action: {
-                        print("Save the order!")
-                    }) {
-                        Text("Add Order")
-                    }
+                        
                 }
+
             }
             .navigationTitle("Add User")
             .sheet(isPresented: $showingImagePicker) {
@@ -54,7 +81,7 @@ struct UserRegistrationView: View {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         configuration.selectionLimit = 1
-        return PhotoPicker(configuration: configuration, showingImagePicker: $showingImagePicker, selectedPhoto: $selectedPhoto)
+        return PhotoPicker(configuration: configuration, showingImagePicker: $showingImagePicker, selectedPhoto: $selectedImage)
 
     }
 }

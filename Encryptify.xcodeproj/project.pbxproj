@@ -18,6 +18,7 @@
 		0F8ADCD72790899900172A22 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCD62790899900172A22 /* ChatView.swift */; };
 		0F8ADCD927908AD200172A22 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCD827908AD200172A22 /* UserViewModel.swift */; };
 		0F8ADCDB2790B82000172A22 /* UserRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */; };
+		0FB6B5C32791882A002C25DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6B5C22791882A002C25DF /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		0F8ADCD62790899900172A22 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		0F8ADCD827908AD200172A22 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistrationView.swift; sourceTree = "<group>"; };
+		0FB6B5C22791882A002C25DF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				0F46E534274EB3CB00912479 /* ConversationView.swift */,
 				0F8ADCD62790899900172A22 /* ChatView.swift */,
 				0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */,
+				0FB6B5C22791882A002C25DF /* Constants.swift */,
 				0F46E51E274EA4F100912479 /* EncryptifyApp.swift */,
 				0F7DBBCA274FB64D00F50EA9 /* Persistence.swift */,
 				0F8ADCD827908AD200172A22 /* UserViewModel.swift */,
@@ -163,6 +166,7 @@
 				0F7DBBCB274FB64D00F50EA9 /* Persistence.swift in Sources */,
 				0F46E521274EA4F100912479 /* ContentMessageView.swift in Sources */,
 				0F46E535274EB3CB00912479 /* ConversationView.swift in Sources */,
+				0FB6B5C32791882A002C25DF /* Constants.swift in Sources */,
 				0F8ADCD72790899900172A22 /* ChatView.swift in Sources */,
 				0F8ADCDB2790B82000172A22 /* UserRegistrationView.swift in Sources */,
 				0F46E51F274EA4F100912479 /* EncryptifyApp.swift in Sources */,
