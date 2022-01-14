@@ -14,7 +14,6 @@ struct ConversationView: View {
     @FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
     @FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
 
-    //@State var currentUser: User = users?.first(where: { $0.isCurrentUser == true})
     
     var body: some View {
         NavigationView {

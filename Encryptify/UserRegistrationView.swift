@@ -11,9 +11,12 @@ import PhotosUI
 
 struct UserRegistrationView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    @Environment (\.presentationMode) var presentationMode
+    
     @ObservedObject private var userVM = UserViewModel()
     @State private var showingImagePicker = false
+    @State private var selectedPhoto: UIImage? = nil
+    @State var userName = ""
     
     @ViewBuilder
     var body: some View {
@@ -21,7 +24,7 @@ struct UserRegistrationView: View {
             VStack {
                 Form {
                     Section(header: Text("Contact Name")) {
-                        TextField("Name", text: $userVM.name)
+                        TextField("Name", text: $userName)
                     }
                     Section(header: Text("Avatar")) {
                             Button(action: {
@@ -31,11 +34,11 @@ struct UserRegistrationView: View {
                             //.buttonStyle(GradientButtonStyle())
                         
                     }
-                    if userVM.image != nil {
+                    if selectedPhoto != nil {
                         Section(header: Text("Chosen Image")) {
                             HStack {
                                 Spacer()
-                                Image(uiImage: userVM.image!)
+                                Image(uiImage: selectedPhoto!)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 200, height: 200)
@@ -50,8 +53,12 @@ struct UserRegistrationView: View {
 
                         }
                         Button(action: {
-                            print("Signed In \(userVM.name)")
+                            print("Signed In \(userName)")
+                            userVM.name = userName
+                            userVM.image = selectedPhoto
                             userVM.save(isSigningIn: true)
+                            userVM.getCurrentUser()
+                            presentationMode.wrappedValue.dismiss()
                         }) {
                             HStack {
                                 Spacer()
@@ -65,7 +72,7 @@ struct UserRegistrationView: View {
                         .background(K.Colors.gradient)
                         .cornerRadius(10)
                         .listRowBackground(Color.clear)
-                        .disabled(userVM.name.isEmpty || userVM.image == nil)
+                        .disabled(userName.isEmpty || selectedPhoto == nil)
                         
                     }
                         
@@ -83,7 +90,7 @@ struct UserRegistrationView: View {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         configuration.selectionLimit = 1
-        return PhotoPicker(configuration: configuration, showingImagePicker: $showingImagePicker, selectedPhoto: $userVM.image)
+        return PhotoPicker(configuration: configuration, showingImagePicker: $showingImagePicker, selectedPhoto: $selectedPhoto)
     }
 }
 

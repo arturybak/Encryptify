@@ -16,6 +16,17 @@ class UserViewModel: ObservableObject {
 
     var image: UIImage? = nil
     var name: String = ""
+    @Published var users: [User] = []
+    @Published var currentUser: User? = nil
+    
+    func getAllUsers() {
+        users = PersistenceController.shared.getAllUsers()
+        print("got all users!")
+    }
+    
+    func getCurrentUser() {
+        currentUser = users.first(where: { $0.isCurrentUser == true})
+    }
     
     func save(isSigningIn: Bool = false) {
         let pickedAvatar = image!.jpegData(compressionQuality: 1.0)

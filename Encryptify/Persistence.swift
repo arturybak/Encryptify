@@ -16,6 +16,15 @@ struct PersistenceController {
     var viewContext: NSManagedObjectContext {
         return container.viewContext
     }
+    
+    func getAllUsers() -> [User] {
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            return []
+        }
+    }
         
     func save() {
         do {
