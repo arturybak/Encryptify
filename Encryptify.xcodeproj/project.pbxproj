@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F43FA392792279200F2465E /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43FA382792279200F2465E /* MessageViewModel.swift */; };
 		0F46E51F274EA4F100912479 /* EncryptifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46E51E274EA4F100912479 /* EncryptifyApp.swift */; };
 		0F46E521274EA4F100912479 /* ContentMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F46E520274EA4F100912479 /* ContentMessageView.swift */; };
 		0F46E523274EA4F300912479 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F46E522274EA4F300912479 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F43FA382792279200F2465E /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		0F46E51B274EA4F100912479 /* Encryptify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Encryptify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F46E51E274EA4F100912479 /* EncryptifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptifyApp.swift; sourceTree = "<group>"; };
 		0F46E520274EA4F100912479 /* ContentMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMessageView.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				0F46E51E274EA4F100912479 /* EncryptifyApp.swift */,
 				0F7DBBCA274FB64D00F50EA9 /* Persistence.swift */,
 				0F8ADCD827908AD200172A22 /* UserViewModel.swift */,
+				0F43FA382792279200F2465E /* MessageViewModel.swift */,
 				0F46E520274EA4F100912479 /* ContentMessageView.swift */,
 				0F46E522274EA4F300912479 /* Assets.xcassets */,
 				0F46E524274EA4F300912479 /* Preview Content */,
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F43FA392792279200F2465E /* MessageViewModel.swift in Sources */,
 				0F7DBBA2274FAC8100F50EA9 /* Main.xcdatamodeld in Sources */,
 				0F8ADCD927908AD200172A22 /* UserViewModel.swift in Sources */,
 				0F7DBBCB274FB64D00F50EA9 /* Persistence.swift in Sources */,

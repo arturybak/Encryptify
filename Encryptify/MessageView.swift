@@ -10,11 +10,10 @@ import CoreData
 
 struct MessageView : View {
     var currentMessage: Message
-    let defaultAvatar = UIImage(named: "default")!.jpegData(compressionQuality: 1.0)
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
             if !currentMessage.user!.isCurrentUser {
-                Image(uiImage: UIImage(data: (currentMessage.user!.avatar ?? defaultAvatar)!)!)
+                Image(uiImage: UIImage(data: (currentMessage.user!.avatar ?? K.Avatars.defaultAvatar)!)!)
                     .resizable()
                     .frame(width: 40, height: 40, alignment: .center)
                     .cornerRadius(20)

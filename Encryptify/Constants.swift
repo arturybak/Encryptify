@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct K {
+    struct Avatars {
+        static let defaultAvatar = UIImage(named: "default")!.jpegData(compressionQuality: 1.0)
+    }
     
     struct Colors {
         static let gradient = LinearGradient(gradient: Gradient(colors: [Color.red, Color.orange]), startPoint: .leading, endPoint: .trailing)

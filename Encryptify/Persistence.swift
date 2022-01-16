@@ -17,6 +17,10 @@ struct PersistenceController {
         return container.viewContext
     }
     
+//    func getMessagesWithUser() -> [Message] {
+//
+//    }
+    
     func getAllUsers() -> [User] {
         let request: NSFetchRequest<User> = User.fetchRequest()
         do {

@@ -53,7 +53,13 @@ struct ChatView: View {
                     List{
                         ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
                             NavigationLink(destination: Text(user.name!)) {
-                                Text(user.name!)
+                                HStack {
+                                    Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .cornerRadius(20)
+                                    Text(user.name!)
+                                }
                             }
                         }.onDelete(perform: deleteUser)
                     }

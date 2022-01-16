@@ -21,7 +21,6 @@ class UserViewModel: ObservableObject {
     
     func getAllUsers() {
         users = PersistenceController.shared.getAllUsers()
-        print("got all users!")
     }
     
     func getCurrentUser() {
