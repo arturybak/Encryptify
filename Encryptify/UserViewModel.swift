@@ -24,7 +24,8 @@ class UserViewModel: ObservableObject {
     }
     
     func getCurrentUser() {
-        currentUser = users.first(where: { $0.isCurrentUser == true})
+        //currentUser = users.first(where: { $0.isCurrentUser == true})
+        currentUser = PersistenceController.shared.getCurrentUser()
     }
     
     func delete(_ user: User){

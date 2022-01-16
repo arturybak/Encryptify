@@ -30,6 +30,17 @@ struct PersistenceController {
         }
     }
     
+    func getCurrentUser() -> User? {
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "isCurrentUser == YES")
+        do {
+            return try viewContext.fetch(request).first
+        } catch {
+            return nil
+        }
+    }
+    
     func deleteUser(user: User) {
         viewContext.delete(user)
         save()
