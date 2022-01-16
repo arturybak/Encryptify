@@ -16,11 +16,7 @@ struct PersistenceController {
     var viewContext: NSManagedObjectContext {
         return container.viewContext
     }
-    
-//    func getMessagesWithUser() -> [Message] {
-//
-//    }
-    
+        
     func getAllUsers() -> [User] {
         let request: NSFetchRequest<User> = User.fetchRequest()
         do {
@@ -29,6 +25,17 @@ struct PersistenceController {
             return []
         }
     }
+    
+    func getConversation(with userId: UUID) -> [Message] {
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        request.predicate = NSPredicate(format: "user.id == %@", userId as CVarArg)
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            return []
+        }
+    }
+
     
     func getCurrentUser() -> User? {
         let request: NSFetchRequest<User> = User.fetchRequest()
@@ -45,6 +52,12 @@ struct PersistenceController {
         viewContext.delete(user)
         save()
     }
+    
+    func deleteMessage(message: Message) {
+        viewContext.delete(message)
+        save()
+    }
+
     
     func save() {
         do {
@@ -101,12 +114,15 @@ struct PersistenceController {
             newMessage.id = UUID()
             newMessage.content = "Vestibulum euismod facilisis quam, at fermentum mi interdum varius"
             newMessage.user = user1
+            newMessage.date = Date()
         }
         for _ in 0..<4 {
             let newMessage = Message(context: viewContext)
             newMessage.id = UUID()
             newMessage.content = "Sed in risus pharetra, tincidunt felis quis, pharetra quam"
             newMessage.user = user2
+            newMessage.date = Date()
+            newMessage.isSender = true
         }
         
         do {

@@ -9,23 +9,23 @@ import SwiftUI
 import CoreData
 
 struct ConversationView: View {
+    var user: User
     @State var typingMessage: String = ""
-//    @Environment(\.managedObjectContext) private var viewContext
-//    @FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
-//    @FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
-    var messages: [Message] = []
-
+    @ObservedObject private var messageVM = MessageViewModel()
+    @ObservedObject private var userVM = UserViewModel()
     
     var body: some View {
         NavigationView {
             ScrollViewReader { proxy in
                 VStack {
                     List {
-                        ForEach(messages) { msg in
+                        ForEach(messageVM.conversation) { msg in
                             MessageView(currentMessage: msg)
                                 .listRowSeparator(.hidden)
                         }
+                        .onDelete(perform: deleteMessage)
                     }
+                    
                     .listStyle(.plain)
                     HStack {
                         TextField("Write your message here", text: $typingMessage)
@@ -41,8 +41,7 @@ struct ConversationView: View {
                         
                     }
                     .frame(minHeight: CGFloat(30)).padding()
-                //}.navigationBarTitle(Text((users.first(where: { $0.isCurrentUser == true})?.name)!), displayMode: .inline)
-                }.navigationBarTitle(Text("Artur Rybka"), displayMode: .inline)
+                }.navigationBarTitle(Text(user.name!), displayMode: .inline)
 
             }
 //            .padding(.bottom, keyboard.currentHeight)
@@ -50,25 +49,50 @@ struct ConversationView: View {
 //        }.onTapGesture {
 //                self.endEditing(true)
         }
+        .onAppear(perform: {
+            userVM.getAllUsers()
+            userVM.getCurrentUser()
+            messageVM.getConversation(with: user.id!)
+        })
+
     }
     
+    func deleteMessage(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let message = messageVM.conversation[index] // because of filtering
+            messageVM.delete(message)
+        }
+        messageVM.getConversation(with: user.id!)
+    }
+
     private func sendMessage() {
-//        let newMessage = Message(context: viewContext)
-//        newMessage.content = typingMessage
-//        newMessage.user = users.first(where: { $0.isCurrentUser == true})
-//        do {
-//            try viewContext.save()
-//            print("Message saved.")
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//        typingMessage = ""
+        messageVM.content = typingMessage
+        messageVM.user = user
+        messageVM.save(isSender: true)
+        messageVM.getConversation(with: user.id!)
+        typingMessage = ""
+
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ConversationView()
+        let user1 = User(context: PersistenceController.preview.container.viewContext)
+        user1.name = "Violet Limes"
+        user1.id = UUID()
+        //user1.avatar = "girl"
+        let image1 = UIImage(named: "girl")
+        user1.avatar = image1!.jpegData(compressionQuality: 1.0)
+        user1.isCurrentUser = false
+
+        let newMessage = Message(context: PersistenceController.preview.container.viewContext)
+        newMessage.id = UUID()
+        newMessage.content = "Vestibulum euismod facilisis quam, at fermentum mi interdum varius"
+        newMessage.user = user1
+        newMessage.date = Date()
+        newMessage.isSender = false
+
+        return ConversationView(user: user1)
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         
     }

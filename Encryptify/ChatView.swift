@@ -52,7 +52,7 @@ struct ChatView: View {
                 VStack {
                     List{
                         ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
-                            NavigationLink(destination: Text(user.name!)) {
+                            NavigationLink(destination: ConversationView(user: user)) {
                                 HStack {
                                     Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
                                         .resizable()

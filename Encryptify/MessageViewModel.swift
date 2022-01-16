@@ -16,30 +16,25 @@ class MessageViewModel: ObservableObject {
 
     var content: String = ""
     var user: User?
-    //@Published var users: [User] = []
-    //@Published var currentUser: User? = nil
+    @Published var conversation: [Message] = []
+
+    func getConversation(with userID: UUID) {
+        conversation = PersistenceController.shared.getConversation(with: userID)
+    }
     
-//    func getAllUsers() {
-//        users = PersistenceController.shared.getAllUsers()
-//        print("got all users!")
-//    }
-//    
-//    func getCurrentUser() {
-//        currentUser = users.first(where: { $0.isCurrentUser == true})
-//    }
-//
-//    func delete(_ user: User){
-//        PersistenceController.shared.deleteUser(user: user)
-//    }
-//
-//    func save(isSigningIn: Bool = false) {
-//        let pickedAvatar = image!.jpegData(compressionQuality: 1.0)
-//        let user = User(context: PersistenceController.shared.viewContext)
-//        user.name = name
-//        user.isCurrentUser = isSigningIn
-//        user.avatar = pickedAvatar
-//        user.id = UUID()
-//
-//        PersistenceController.shared.save()
-//    }
+    func delete(_ message: Message){
+        PersistenceController.shared.deleteMessage(message: message)
+    }
+
+    func save(isSender: Bool = false) {
+        let message = Message(context: PersistenceController.shared.viewContext)
+        message.content = content
+        message.user = user
+        message.isSender = isSender
+        
+        message.id = UUID()
+        message.date = Date()
+        
+        PersistenceController.shared.save()
+    }
 }

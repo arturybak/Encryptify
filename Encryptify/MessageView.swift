@@ -12,7 +12,7 @@ struct MessageView : View {
     var currentMessage: Message
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
-            if !currentMessage.user!.isCurrentUser {
+            if !currentMessage.isSender {
                 Image(uiImage: UIImage(data: (currentMessage.user!.avatar ?? K.Avatars.defaultAvatar)!)!)
                     .resizable()
                     .frame(width: 40, height: 40, alignment: .center)
@@ -22,7 +22,7 @@ struct MessageView : View {
             }
             
             ContentMessageView(contentMessage: currentMessage.content!,
-                               isCurrentUser: currentMessage.user!.isCurrentUser)
+                               isCurrentUser: currentMessage.isSender)
                 //.padding(.horizontal, 7)
         }
 
@@ -38,11 +38,14 @@ struct MessageView_Previews: PreviewProvider {
         //user1.avatar = "girl"
         let image1 = UIImage(named: "girl")
         user1.avatar = image1!.jpegData(compressionQuality: 1.0)
+        user1.isCurrentUser = false
 
         let newMessage = Message(context: PersistenceController.preview.container.viewContext)
         newMessage.id = UUID()
         newMessage.content = "Vestibulum euismod facilisis quam, at fermentum mi interdum varius"
         newMessage.user = user1
+        newMessage.date = Date()
+        newMessage.isSender = false
         
         return MessageView(currentMessage: newMessage)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
