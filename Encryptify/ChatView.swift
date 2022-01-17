@@ -66,7 +66,8 @@ struct ChatView: View {
                                         Text("Last Message")
                                             .font(.system(size: 14))
                                             .foregroundColor(Color(.lightGray))
-                                    }                                }
+                                    }
+                                }
                             }
                         }.onDelete(perform: deleteUser)
                     }

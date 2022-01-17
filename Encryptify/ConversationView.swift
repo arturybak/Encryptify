@@ -17,14 +17,22 @@ struct ConversationView: View {
     var body: some View {
             ScrollViewReader { proxy in
                 VStack {
-                    List {
-                        ForEach(messageVM.conversation) { msg in
-                            MessageView(currentMessage: msg)
-                                .listRowSeparator(.hidden)
+                    if messageVM.conversation.isEmpty {
+                        Spacer()
+                        Text("No messages yet")
+                            .font(.system(size: 30))
+                            .foregroundColor(Color.gray)
+                        Spacer()
+                    } else {
+                        List {
+                            ForEach(messageVM.conversation) { msg in
+                                MessageView(currentMessage: msg)
+                                    .listRowSeparator(.hidden)
+                            }
+                            .onDelete(perform: deleteMessage)
                         }
-                        .onDelete(perform: deleteMessage)
+                        .listStyle(.plain)
                     }
-                    .listStyle(.plain)
                     chatBottomBar
                         //.background(Color(.init(white: 0.95, alpha: 1)).ignoresSafeArea())
 
@@ -66,7 +74,7 @@ struct ConversationView: View {
     
     func deleteMessage(at offsets: IndexSet) {
         offsets.forEach { index in
-            let message = messageVM.conversation[index] // because of filtering
+            let message = messageVM.conversation[index]
             messageVM.delete(message)
         }
         messageVM.getConversation(with: user.id!)
