@@ -15,7 +15,6 @@ struct ConversationView: View {
     @ObservedObject private var userVM = UserViewModel()
     
     var body: some View {
-        NavigationView {
             ScrollViewReader { proxy in
                 VStack {
                     List {
@@ -25,22 +24,10 @@ struct ConversationView: View {
                         }
                         .onDelete(perform: deleteMessage)
                     }
-                    
                     .listStyle(.plain)
-                    HStack {
-                        TextField("Write your message here", text: $typingMessage)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            //.frame(minHeight: CGFloat(30))
-//                            .onTapGesture {
-//                                proxy.scrollTo(chatHelper.realTimeMessages[chatHelper.realTimeMessages.endIndex - 1])
-//                            }
+                    chatBottomBar
+                        //.background(Color(.init(white: 0.95, alpha: 1)).ignoresSafeArea())
 
-                        Button(action: sendMessage) {
-                            Text("Send")
-                        }
-                        
-                    }
-                    .frame(minHeight: CGFloat(30)).padding()
                 }.navigationBarTitle(Text(user.name!), displayMode: .inline)
 
             }
@@ -48,13 +35,33 @@ struct ConversationView: View {
 //            .edgesIgnoringSafeArea(keyboard.currentHeight == 0.0 ? .leading: .bottom)
 //        }.onTapGesture {
 //                self.endEditing(true)
-        }
         .onAppear(perform: {
             userVM.getAllUsers()
             userVM.getCurrentUser()
             messageVM.getConversation(with: user.id!)
         })
 
+    }
+    
+    private var chatBottomBar: some View {
+        HStack {
+            TextField("Write your message here", text: $typingMessage)
+                //.frame(minHeight: CGFloat(30))
+//                            .onTapGesture {
+//                                proxy.scrollTo(chatHelper.realTimeMessages[chatHelper.realTimeMessages.endIndex - 1])
+//                            }
+                .frame(height: 40)
+            Button(action: sendMessage) {
+                Text("Send")
+            }
+            .buttonStyle(K.GradientButtonStyle())
+            
+            
+        }
+        .padding(.horizontal)
+        
+        //.padding(.vertical, 8)
+        
     }
     
     func deleteMessage(at offsets: IndexSet) {

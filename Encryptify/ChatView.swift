@@ -24,7 +24,7 @@ struct ChatView: View {
                         .font(.title2)
                     Button(action: {showingRegistrationForm.toggle()}) {Text("Sign In").font(.title).frame(maxWidth: .infinity)}
                     .padding([.top, .leading, .trailing])
-                    .buttonStyle(GradientButtonStyle())
+                    .buttonStyle(K.GradientButtonStyle())
 
                 }
                 .navigationTitle(Text("Encryptify"))
@@ -41,7 +41,7 @@ struct ChatView: View {
                     Spacer()
                     Button(action: {showingRegistrationForm.toggle()}) {Text("Add your first Contact!").font(.title).frame(maxWidth: .infinity)}
                     .padding([.top, .leading, .trailing])
-                    .buttonStyle(GradientButtonStyle())
+                    .buttonStyle(K.GradientButtonStyle())
                 }
                 .navigationTitle(Text("Encryptify"))
                 .sheet(isPresented: $showingRegistrationForm, onDismiss: didDismiss) {
@@ -53,20 +53,27 @@ struct ChatView: View {
                     List{
                         ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
                             NavigationLink(destination: ConversationView(user: user)) {
-                                HStack {
+                                HStack(spacing: 15) {
                                     Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
                                         .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .cornerRadius(20)
-                                    Text(user.name!)
-                                }
+                                        .frame(width: 45, height: 45)
+                                        //.cornerRadius(20)
+                                        .clipShape(Circle())
+
+                                    VStack(alignment: .leading) {
+                                        Text(user.name!)
+                                            .font(.system(size: 16, weight: .bold))
+                                        Text("Last Message")
+                                            .font(.system(size: 14))
+                                            .foregroundColor(Color(.lightGray))
+                                    }                                }
                             }
                         }.onDelete(perform: deleteUser)
                     }
                     Spacer()
                     Button(action: {showingRegistrationForm.toggle()}) {Text("Add Contact").font(.title).frame(maxWidth: .infinity)}
                     .padding([.top, .leading, .trailing])
-                    .buttonStyle(GradientButtonStyle())
+                    .buttonStyle(K.GradientButtonStyle())
 
                 }
                 .navigationTitle(Text("Encryptify"))
@@ -82,7 +89,7 @@ struct ChatView: View {
         })
 
     }
-    
+        
     func deleteUser(at offsets: IndexSet) {
         offsets.forEach { index in
             let user = userVM.users[index + 1] // because of filtering
@@ -100,18 +107,6 @@ struct ChatView: View {
 
 
 
-
-
-struct GradientButtonStyle: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .foregroundColor(Color.white)
-            .padding()
-            .background(K.Colors.gradient)
-            .cornerRadius(15.0)
-            .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
-    }
-}
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
