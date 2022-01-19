@@ -11,7 +11,6 @@ import CoreData
 struct ConversationView: View {
     var user: User
     @State var typingMessage: String = ""
-    static let scrollToString = "Cikita"
     @ObservedObject private var messageVM = MessageViewModel()
     @ObservedObject private var userVM = UserViewModel()
     
@@ -27,14 +26,16 @@ struct ConversationView: View {
                     } else {
                         List {
                             ForEach(messageVM.conversation) { msg in
-                                MessageView(currentMessage: msg)
-                                    .listRowSeparator(.hidden)
+                                if msg == messageVM.conversation.last {
+                                    MessageView(currentMessage: msg)
+                                        .id("lastMessage")
+                                        .listRowSeparator(.hidden)
+                                } else {
+                                    MessageView(currentMessage: msg)
+                                        .listRowSeparator(.hidden)
+                                }
                             }
                             .onDelete(perform: deleteMessage)
-                            
-                            //TODO scroll to last message
-                            Divider()
-                                .id(Self.scrollToString)
                         }
                         .listStyle(.plain)
                     }
@@ -42,12 +43,15 @@ struct ConversationView: View {
                 .navigationBarTitle(Text(user.name!), displayMode: .inline)
                 .onChange(of: messageVM.conversation.count) { _ in
                     withAnimation(.easeOut(duration: 0.5)) {
-                        value.scrollTo(Self.scrollToString)}
+                        value.scrollTo("lastMessage")}
                     }
                 .safeAreaInset(edge: .bottom) {
                     chatBottomBar
                         .background(Color(.systemBackground))
                         .ignoresSafeArea()
+//                        .onTapGesture {
+//                            value.scrollTo(Self.scrollToString)
+//                        }
                 }
             }
         .onAppear(perform: {
@@ -60,10 +64,6 @@ struct ConversationView: View {
     private var chatBottomBar: some View {
         HStack {
             TextField("Write your message here", text: $typingMessage)
-                //.frame(minHeight: CGFloat(30))
-//                            .onTapGesture {
-//                                proxy.scrollTo(chatHelper.realTimeMessages[chatHelper.realTimeMessages.endIndex - 1])
-//                            }
                 .frame(height: 40)
             Button(action: sendMessage) {
                 Text("Send")
