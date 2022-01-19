@@ -32,7 +32,7 @@ struct UserRegistrationView: View {
                                 showingImagePicker.toggle()
 
                             }) {Text("browse..").font(.headline)}
-                            //.buttonStyle(GradientButtonStyle())
+                            //.buttonStyle(K.GradientButtonStyle())
                         
                     }
                     if selectedPhoto != nil {
@@ -53,13 +53,7 @@ struct UserRegistrationView: View {
                             .listRowBackground(Color.clear)
 
                         }
-                        Button(action: {
-                            userVM.name = userName
-                            userVM.image = selectedPhoto
-                            userVM.save(isSigningIn: firstUser)
-                            userVM.getCurrentUser()
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
+                        Button(action: {addUser()}) {
                             HStack {
                                 Spacer()
                                 Text(firstUser ? "Sign In" : "Add Contact")
@@ -79,11 +73,19 @@ struct UserRegistrationView: View {
                 }
 
             }
-            .navigationTitle("Add User")
+            .navigationTitle(firstUser ? "Sign In" : "Add Contact")
             .sheet(isPresented: $showingImagePicker) {
                 renderPicker()
             }
         }
+    }
+    
+    private func addUser() {
+        userVM.name = userName
+        userVM.image = selectedPhoto
+        userVM.save(isSigningIn: firstUser)
+        //userVM.getCurrentUser()
+        presentationMode.wrappedValue.dismiss()
     }
     
     private func renderPicker() -> some View {

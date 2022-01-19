@@ -8,87 +8,64 @@
 import SwiftUI
 
 struct ChatView: View {
-    //@Environment(\.managedObjectContext) private var viewContext
-    //@FetchRequest(entity: User.entity(), sortDescriptors: []) var users: FetchedResults<User>
-    //@FetchRequest(entity: Message.entity(), sortDescriptors: []) var messages: FetchedResults<Message>
     @ObservedObject private var userVM = UserViewModel()
 
     @State private var showingRegistrationForm = false
+    
     @ViewBuilder
     var body: some View {
         NavigationView {
-            if userVM.users.isEmpty {
                 VStack {
-                    Spacer()
-                    Text("First time?")
-                        .font(.title2)
-                    Button(action: {showingRegistrationForm.toggle()}) {Text("Sign In").font(.title).frame(maxWidth: .infinity)}
-                    .padding([.top, .leading, .trailing])
-                    .buttonStyle(K.GradientButtonStyle())
-
-                }
-                .navigationTitle(Text("Encryptify"))
-                .sheet(isPresented: $showingRegistrationForm, onDismiss: didDismiss) {
-                    UserRegistrationView(firstUser: true)
-                }
-
-            } else if (userVM.users.count == 1) {
-                VStack {
-                    Spacer()
-                    Text("Welcome \((userVM.currentUser?.name ?? userVM.users[0].name)!)!")
-                        .font(.title2)
-                        .padding(.bottom, 10.0)
-                    Spacer()
-                    Button(action: {showingRegistrationForm.toggle()}) {Text("Add your first Contact!").font(.title).frame(maxWidth: .infinity)}
-                    .padding([.top, .leading, .trailing])
-                    .buttonStyle(K.GradientButtonStyle())
-                }
-                .navigationTitle(Text("Encryptify"))
-                .sheet(isPresented: $showingRegistrationForm, onDismiss: didDismiss) {
-                    UserRegistrationView()
-                }
-
-            } else {
-                VStack {
-                    List{
-                        ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
-                            NavigationLink(destination: ConversationView(user: user)) {
-                                HStack(spacing: 15) {
-                                    Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
-                                        .resizable()
-                                        .frame(width: 45, height: 45)
-                                        //.cornerRadius(20)
-                                        .clipShape(Circle())
-
-                                    VStack(alignment: .leading) {
-                                        Text(user.name!)
-                                            .font(.system(size: 16, weight: .bold))
-                                        Text("Last Message")
-                                            .font(.system(size: 14))
-                                            .foregroundColor(Color(.lightGray))
-                                    }
-                                }
-                            }
-                        }.onDelete(perform: deleteUser)
+                    if userVM.users.isEmpty {
+                        Spacer()
+                        Text("First time?")
+                            .font(.title2)
+                    } else if (userVM.users.count == 1) {
+                        Spacer()
+                        Text("Welcome \((userVM.currentUser?.name ?? userVM.users[0].name)!)!")
+                            .font(.title)
+                            .padding(.bottom, 10.0)
+                        Spacer()
+                        Text("Add your first Contact")
+                            .font(.title3)
+                            .foregroundColor(.gray)
+                    } else {
+                        conversationList
+                        //Spacer()
                     }
-                    Spacer()
-                    Button(action: {showingRegistrationForm.toggle()}) {Text("Add Contact").font(.title).frame(maxWidth: .infinity)}
-                    .padding([.top, .leading, .trailing])
+                    Button(action: {showingRegistrationForm.toggle()}) {Text(userVM.users.isEmpty ? "Sign In" : "Add Contact").font(.title).frame(maxWidth: .infinity)}
+                    .padding([.leading, .trailing])
                     .buttonStyle(K.GradientButtonStyle())
-
                 }
                 .navigationTitle(Text("Encryptify"))
-                .sheet(isPresented: $showingRegistrationForm, onDismiss: didDismiss) {
-                    UserRegistrationView()
+                .sheet(isPresented: $showingRegistrationForm, onDismiss: fetchData) {
+                    UserRegistrationView(firstUser: userVM.users.isEmpty)
                 }
             }
+        .onAppear(perform: {fetchData()})
+    }
+    
+    private var conversationList: some View {
+        List{
+            ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
+                NavigationLink(destination: ConversationView(user: user)) {
+                    HStack(spacing: 15) {
+                        Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
+                            .resizable()
+                            .frame(width: 45, height: 45)
+                            .clipShape(Circle())
 
+                        VStack(alignment: .leading) {
+                            Text(user.name!)
+                                .font(.system(size: 16, weight: .bold))
+                            Text("Last Message")
+                                .font(.system(size: 14))
+                                .foregroundColor(Color(.lightGray))
+                        }
+                    }
+                }
+            }.onDelete(perform: deleteUser)
         }
-        .onAppear(perform: {
-            userVM.getAllUsers()
-            userVM.getCurrentUser()
-        })
-
     }
         
     func deleteUser(at offsets: IndexSet) {
@@ -99,12 +76,11 @@ struct ChatView: View {
         userVM.getAllUsers()
     }
     
-    func didDismiss() {
+    func fetchData() {
         userVM.getAllUsers()
         userVM.getCurrentUser()
     }
 }
-
 
 
 

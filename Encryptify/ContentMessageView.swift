@@ -15,7 +15,7 @@ struct ContentMessageView: View {
         Text(contentMessage)
             .padding(15)
             .foregroundColor(isCurrentUser ? Color.white : Color.black)
-            .background(isCurrentUser ? Color.blue : Color(UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)))
+            .background(isCurrentUser ? Color.blue : Color(.init(white: 0.95, alpha: 1)))
             .cornerRadius(15)
         
     }

@@ -44,7 +44,6 @@ struct ConversationView: View {
 //        }.onTapGesture {
 //                self.endEditing(true)
         .onAppear(perform: {
-            userVM.getAllUsers()
             userVM.getCurrentUser()
             messageVM.getConversation(with: user.id!)
         })
