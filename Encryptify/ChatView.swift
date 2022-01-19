@@ -56,16 +56,39 @@ struct ChatView: View {
                             .clipShape(Circle())
 
                         VStack(alignment: .leading) {
-                            Text(user.name!)
-                                .font(.system(size: 16, weight: .bold))
-                            Text("Last Message")
-                                .font(.system(size: 14))
-                                .foregroundColor(Color(.lightGray))
+                            HStack {
+                                Text(user.name!)
+                                    .font(.headline)
+                                Spacer()
+                                Text((user.lastMessage != nil) ? timeAgo(since: user.lastMessage!.date!) : "")
+                                    .font(.callout)
+                                    .foregroundColor(Color(.lightGray))
+                            }
+                            Text((user.lastMessage != nil) ? user.lastMessage!.content! : "Start the conversation!")
+                                .frame(width: 190, alignment: .leading)
+                                .lineLimit(1)
+                                .font(.callout)
+                                .foregroundColor(Color(.gray))
                         }
+                        //Spacer()
+                        
                     }
                 }
             }.onDelete(perform: deleteUser)
         }
+    }
+    
+    func timeAgo(since: Date) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.includesApproximationPhrase = false
+        formatter.includesTimeRemainingPhrase = false
+        formatter.allowsFractionalUnits = false
+        //formatter.collapseLargestUnit = true
+        formatter.maximumUnitCount = 1
+        formatter.unitsStyle = .short
+        formatter.allowedUnits = [.second, .minute, .hour, .day, .month, .year]
+
+        return formatter.string(from: since, to: Date())!
     }
         
     func deleteUser(at offsets: IndexSet) {

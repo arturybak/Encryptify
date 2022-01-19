@@ -35,6 +35,8 @@ class MessageViewModel: ObservableObject {
         message.id = UUID()
         message.date = Date()
         
+        user?.lastMessage = message
+        
         PersistenceController.shared.save()
     }
 }

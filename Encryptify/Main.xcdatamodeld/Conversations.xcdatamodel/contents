@@ -12,10 +12,11 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isCurrentUser" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="user" inverseEntity="Message"/>
     </entity>
     <elements>
         <element name="Message" positionX="-454.43359375" positionY="-16.8125" width="128" height="104"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>

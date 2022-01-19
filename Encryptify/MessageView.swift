@@ -47,6 +47,8 @@ struct MessageView_Previews: PreviewProvider {
         newMessage.date = Date()
         newMessage.isSender = false
         
+        user1.lastMessage = newMessage
+        
         return MessageView(currentMessage: newMessage)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 

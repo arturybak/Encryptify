@@ -82,6 +82,7 @@ struct ConversationView: View {
     private func sendMessage() {
         messageVM.content = typingMessage
         messageVM.user = user
+        
         messageVM.save(isSender: true)
         messageVM.getConversation(with: user.id!)
         typingMessage = ""
@@ -105,6 +106,8 @@ struct ContentView_Previews: PreviewProvider {
         newMessage.user = user1
         newMessage.date = Date()
         newMessage.isSender = false
+        
+        user1.lastMessage = newMessage
 
         return ConversationView(user: user1)
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

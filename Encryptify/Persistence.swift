@@ -120,7 +120,7 @@ struct PersistenceController {
             let newMessage = Message(context: viewContext)
             newMessage.id = UUID()
             newMessage.content = "Sed in risus pharetra, tincidunt felis quis, pharetra quam"
-            newMessage.user = user2
+            newMessage.user = user1
             newMessage.date = Date()
             newMessage.isSender = true
         }
