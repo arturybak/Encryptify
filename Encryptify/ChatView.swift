@@ -64,6 +64,7 @@ struct ChatView: View {
                                     .font(.callout)
                                     .foregroundColor(Color(.lightGray))
                             }
+                            //TODO update when changed
                             Text((user.lastMessage != nil) ? user.lastMessage!.content! : "Start the conversation!")
                                 .frame(width: 190, alignment: .leading)
                                 .lineLimit(1)

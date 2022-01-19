@@ -11,18 +11,19 @@ import CoreData
 struct ConversationView: View {
     var user: User
     @State var typingMessage: String = ""
+    static let scrollToString = "Cikita"
     @ObservedObject private var messageVM = MessageViewModel()
     @ObservedObject private var userVM = UserViewModel()
     
     var body: some View {
-            ScrollViewReader { proxy in
+            ScrollViewReader { value in
                 VStack {
                     if messageVM.conversation.isEmpty {
                         Spacer()
                         Text("No messages yet")
                             .font(.system(size: 30))
                             .foregroundColor(Color.gray)
-                        Spacer()
+                        //Spacer()
                     } else {
                         List {
                             ForEach(messageVM.conversation) { msg in
@@ -30,19 +31,25 @@ struct ConversationView: View {
                                     .listRowSeparator(.hidden)
                             }
                             .onDelete(perform: deleteMessage)
+                            
+                            //TODO scroll to last message
+                            Divider()
+                                .id(Self.scrollToString)
                         }
                         .listStyle(.plain)
                     }
+                }
+                .navigationBarTitle(Text(user.name!), displayMode: .inline)
+                .onChange(of: messageVM.conversation.count) { _ in
+                    withAnimation(.easeOut(duration: 0.5)) {
+                        value.scrollTo(Self.scrollToString)}
+                    }
+                .safeAreaInset(edge: .bottom) {
                     chatBottomBar
-                        //.background(Color(.init(white: 0.95, alpha: 1)).ignoresSafeArea())
-
-                }.navigationBarTitle(Text(user.name!), displayMode: .inline)
-
+                        .background(Color(.systemBackground))
+                        .ignoresSafeArea()
+                }
             }
-//            .padding(.bottom, keyboard.currentHeight)
-//            .edgesIgnoringSafeArea(keyboard.currentHeight == 0.0 ? .leading: .bottom)
-//        }.onTapGesture {
-//                self.endEditing(true)
         .onAppear(perform: {
             userVM.getCurrentUser()
             messageVM.getConversation(with: user.id!)
@@ -62,6 +69,7 @@ struct ConversationView: View {
                 Text("Send")
             }
             .buttonStyle(K.GradientButtonStyle())
+            .padding(.vertical, 7.0)
             
             
         }

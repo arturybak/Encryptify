@@ -14,7 +14,7 @@ struct K {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
                 .foregroundColor(Color.white)
-                .padding()
+                .padding(10)
                 .background(K.Colors.gradient)
                 .cornerRadius(15.0)
                 .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
