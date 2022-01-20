@@ -37,12 +37,12 @@ struct ChatView: View {
                     .padding([.leading, .trailing])
                     .buttonStyle(K.GradientButtonStyle())
                 }
+                .onAppear(perform: {fetchData()})
                 .navigationTitle(Text("Encryptify"))
                 .sheet(isPresented: $showingRegistrationForm, onDismiss: fetchData) {
                     UserRegistrationView(firstUser: userVM.users.isEmpty)
                 }
             }
-        .onAppear(perform: {fetchData()})
     }
     
     private var conversationList: some View {

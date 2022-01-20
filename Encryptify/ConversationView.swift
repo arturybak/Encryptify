@@ -55,7 +55,6 @@ struct ConversationView: View {
             userVM.getCurrentUser()
             messageVM.getConversation(with: user.id!)
         })
-
     }
     
     private var chatBottomBar: some View {
