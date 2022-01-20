@@ -95,6 +95,7 @@ struct ChatView: View {
     func deleteUser(at offsets: IndexSet) {
         offsets.forEach { index in
             let user = userVM.users[index + 1] // because of filtering
+            print("attempting deletion of \(user.name!)")
             userVM.delete(user)
         }
         userVM.getAllUsers()

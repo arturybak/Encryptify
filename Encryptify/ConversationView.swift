@@ -10,7 +10,7 @@ import CoreData
 
 struct ConversationView: View {
     var user: User
-    @State var typingMessage: String = ""
+    @State private var typingMessage: String = ""
     @ObservedObject private var messageVM = MessageViewModel()
     @ObservedObject private var userVM = UserViewModel()
     
@@ -49,9 +49,6 @@ struct ConversationView: View {
                     chatBottomBar
                         .background(Color(.systemBackground))
                         .ignoresSafeArea()
-//                        .onTapGesture {
-//                            value.scrollTo(Self.scrollToString)
-//                        }
                 }
             }
         .onAppear(perform: {
@@ -74,12 +71,10 @@ struct ConversationView: View {
             
         }
         .padding(.horizontal)
-        
-        //.padding(.vertical, 8)
-        
     }
     
     func deleteMessage(at offsets: IndexSet) {
+        messageVM.user = user
         offsets.forEach { index in
             let message = messageVM.conversation[index]
             messageVM.delete(message)

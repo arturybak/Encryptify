@@ -49,6 +49,7 @@ struct PersistenceController {
     }
     
     func deleteUser(user: User) {
+        print("persistence - deleting \(user.name!)")
         viewContext.delete(user)
         save()
     }

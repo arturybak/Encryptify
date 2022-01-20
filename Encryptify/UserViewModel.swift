@@ -28,6 +28,7 @@ class UserViewModel: ObservableObject {
     }
     
     func delete(_ user: User){
+        print("userVM - deleting \(user.name!)")
         PersistenceController.shared.deleteUser(user: user)
     }
     

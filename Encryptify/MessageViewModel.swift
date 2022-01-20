@@ -24,7 +24,13 @@ class MessageViewModel: ObservableObject {
     }
     
     func delete(_ message: Message){
-        user!.lastMessage = nil
+        if message == conversation.last {
+            if conversation.count > 1 {
+                user!.lastMessage = conversation[conversation.count - 2]
+            } else {
+                user!.lastMessage = nil
+            }
+        }
         PersistenceController.shared.deleteMessage(message: message)
     }
 
