@@ -27,25 +27,17 @@ struct ConversationView: View {
                     } else {
                         List {
                             ForEach(messageVM.conversation) { msg in
-                                if msg == messageVM.conversation.last {
-                                    NavigationLink {
-                                        let message = Data([UInt8](msg.content!.utf8))
-                                        let secret = try! Secret(data: message, threshold: 2, shares: 3)
-                                        let shares = try! secret.split()
-                                                
-                                        Button("first part") {sharingSheet(share: shares[0].description)}
-                                        Button("second part") {sharingSheet(share: shares[1].description)}
-                                        Button("third part") {sharingSheet(share: shares[2].description)}
-
-                                    } label: {
-                                        MessageView(currentMessage: msg)
-                                            .listRowSeparator(.hidden)
-                                    }
-                                    .id("lastMessage")
-                                } else {
+                                ZStack {
                                     MessageView(currentMessage: msg)
-                                        .listRowSeparator(.hidden)
+                                    NavigationLink(destination: MessageShareView(message: msg)) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0)
                                 }
+                                .listRowSeparator(.hidden)
+                                .if(msg == messageVM.conversation.last)
+                                {$0.id("lastMessage")}
+                                .disabled(!msg.isSender)
                             }
                             .onDelete(perform: deleteMessage)
                         }
@@ -69,14 +61,6 @@ struct ConversationView: View {
         })
     }
     
-    func sharingSheet(share: String) {
-        guard let urlShare = URL(string: share) else { return }
-        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        window!.rootViewController?.present(activityVC, animated: true, completion: nil)
-    }
     
     private var chatBottomBar: some View {
         HStack {
@@ -111,6 +95,20 @@ struct ConversationView: View {
         typingMessage = ""
 
     }
+}
+
+extension View {
+  @ViewBuilder
+  func `if`<Transform: View>(
+    _ condition: Bool,
+    transform: (Self) -> Transform
+  ) -> some View {
+    if condition {
+      transform(self)
+    } else {
+      self
+    }
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {

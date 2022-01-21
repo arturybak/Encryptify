@@ -14,13 +14,17 @@ struct K {
         func makeBody(configuration: Self.Configuration) -> some View {
             configuration.label
                 .foregroundColor(Color.white)
-                .padding(10)
+                .padding(15)
                 .background(K.Colors.gradient)
                 .cornerRadius(15.0)
                 .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
         }
     }
 
+    struct SecretSharing {
+        static let threshold = 2
+        static let shares = 3
+    }
     struct Avatars {
         static let defaultAvatar = UIImage(named: "default")!.jpegData(compressionQuality: 1.0)
     }
