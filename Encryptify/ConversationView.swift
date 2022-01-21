@@ -11,6 +11,7 @@ import CoreData
 struct ConversationView: View {
     var user: User
     @State private var typingMessage: String = ""
+    @State private var showingAlert = false
     @ObservedObject private var messageVM = MessageViewModel()
     @ObservedObject private var userVM = UserViewModel()
     
@@ -27,9 +28,20 @@ struct ConversationView: View {
                         List {
                             ForEach(messageVM.conversation) { msg in
                                 if msg == messageVM.conversation.last {
-                                    MessageView(currentMessage: msg)
-                                        .id("lastMessage")
-                                        .listRowSeparator(.hidden)
+                                    NavigationLink {
+                                        let message = Data([UInt8](msg.content!.utf8))
+                                        let secret = try! Secret(data: message, threshold: 2, shares: 3)
+                                        let shares = try! secret.split()
+                                                
+                                        Button("first part") {sharingSheet(share: shares[0].description)}
+                                        Button("second part") {sharingSheet(share: shares[1].description)}
+                                        Button("third part") {sharingSheet(share: shares[2].description)}
+
+                                    } label: {
+                                        MessageView(currentMessage: msg)
+                                            .listRowSeparator(.hidden)
+                                    }
+                                    .id("lastMessage")
                                 } else {
                                     MessageView(currentMessage: msg)
                                         .listRowSeparator(.hidden)
@@ -55,6 +67,15 @@ struct ConversationView: View {
             userVM.getCurrentUser()
             messageVM.getConversation(with: user.id!)
         })
+    }
+    
+    func sharingSheet(share: String) {
+        guard let urlShare = URL(string: share) else { return }
+        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        window!.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
     
     private var chatBottomBar: some View {
