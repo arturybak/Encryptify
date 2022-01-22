@@ -19,9 +19,16 @@ struct MessageShareView: View {
         VStack {
             Text("share your message with \(message!.user!.name!)!")
                 .font(.title)
+            
+            ContentMessageView(contentMessage: message!.content!, isCurrentUser: true)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(.init(white: 0.95, alpha: 1)))
             Spacer()
+            //let _ = print("message was sent on: \(message!.date!)")
+
             ForEach(shares.indices) { index in
-                Button(action: {sharingSheet(share: shares[index].description)}) {Text("part \(index+1)").font(.title)}
+                Button(action: {sharingSheet(share: shares[index].description, messageId: message!.date!)}) {Text("part \(index+1)").font(.title)}
                 .buttonStyle(K.GradientButtonStyle())
             }
             Spacer()
@@ -33,8 +40,9 @@ struct MessageShareView: View {
     }
 }
 
-func sharingSheet(share: String) {
-    guard let urlShare = URL(string: share) else { return }
+func sharingSheet(share: String, messageId: Date) {
+    //guard let urlShare = URL(string: share) else { return }
+    let urlShare = "\(share)\(messageId)" //appending id of length 36
     let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
     let scenes = UIApplication.shared.connectedScenes
     let windowScene = scenes.first as? UIWindowScene
