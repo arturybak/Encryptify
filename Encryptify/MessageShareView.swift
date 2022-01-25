@@ -15,7 +15,6 @@ struct MessageShareView: View {
         let secret = try! Secret(data: msg, threshold: K.SecretSharing.threshold, shares: K.SecretSharing.shares)
         let shares = try! secret.split()
                 
-        //Text()
         VStack {
             Text("share your message with \(message!.user!.name!)!")
                 .font(.title)

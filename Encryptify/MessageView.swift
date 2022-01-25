@@ -12,11 +12,8 @@ struct MessageView : View {
     var currentMessage: Message
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
-            if currentMessage.content == nil {
-                Spacer()
-            } else {
                 if !currentMessage.isSender {
-                    Image(uiImage: UIImage(data: (currentMessage.user!.avatar ?? K.Avatars.defaultAvatar)!)!)
+                    Image(uiImage: UIImage(data: (currentMessage.user?.avatar ?? K.Avatars.defaultAvatar)!)!)
                         .resizable()
                         .frame(width: 40, height: 40, alignment: .center)
                         .cornerRadius(20)
@@ -24,9 +21,8 @@ struct MessageView : View {
                     Spacer()
                 }
                 
-                ContentMessageView(contentMessage: currentMessage.content!,
+            ContentMessageView(contentMessage: currentMessage.content ?? "",
                                    isCurrentUser: currentMessage.isSender)
-            }
                 //.padding(.horizontal, 7)
         }
 

@@ -57,7 +57,7 @@ struct ChatView: View {
 
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(user.name!)
+                                Text(user.name ?? "no users")
                                     .font(.headline)
                                 Spacer()
                                 Text((user.lastMessage != nil) ? timeAgo(since: user.lastMessage!.date!) : "")
