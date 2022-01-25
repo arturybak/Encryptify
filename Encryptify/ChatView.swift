@@ -17,37 +17,39 @@ struct ChatView: View {
         NavigationView {
                 VStack {
                     if userVM.users.isEmpty {
-                        Spacer()
-                        Text("First time?")
-                            .font(.title2)
-                    } else if (userVM.users.count == 1) {
-                        Spacer()
-                        Text("Welcome \((userVM.currentUser?.name ?? userVM.users[0].name)!)!")
-                            .font(.title)
-                            .padding(.bottom, 10.0)
-                        Spacer()
-                        Text("Add your first Contact")
-                            .font(.title3)
-                            .foregroundColor(.gray)
+                        if userVM.currentUser == nil {
+                            Spacer()
+                            Text("First time?")
+                                .font(.title2)
+                        } else {
+                            Spacer()
+                            Text("Welcome \((userVM.currentUser?.name ?? userVM.users[0].name)!)!")
+                                .font(.title)
+                                .padding(.bottom, 10.0)
+                            Spacer()
+                            Text("Add your first Contact")
+                                .font(.title3)
+                                .foregroundColor(.gray)
+                        }
                     } else {
                         conversationList
                         //Spacer()
                     }
-                    Button(action: {showingRegistrationForm.toggle()}) {Text(userVM.users.isEmpty ? "Sign In" : "Add Contact").font(.title).frame(maxWidth: .infinity)}
+                    Button(action: {showingRegistrationForm.toggle()}) {Text(userVM.currentUser == nil ? "Sign In" : "Add Contact").font(.title).frame(maxWidth: .infinity)}
                     .padding([.leading, .trailing])
                     .buttonStyle(K.GradientButtonStyle())
                 }
                 .onAppear(perform: {fetchData()})
                 .navigationTitle(Text("Encryptify"))
                 .sheet(isPresented: $showingRegistrationForm, onDismiss: fetchData) {
-                    UserRegistrationView(firstUser: userVM.users.isEmpty)
+                    UserRegistrationView(firstUser: userVM.currentUser == nil)
                 }
             }
     }
     
     private var conversationList: some View {
         List{
-            ForEach(userVM.users.filter {!$0.isCurrentUser}) { user in
+            ForEach(userVM.users) { user in
                 NavigationLink(destination: ConversationView(user: user)) {
                     HStack(spacing: 15) {
                         Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
@@ -93,7 +95,7 @@ struct ChatView: View {
         
     func deleteUser(at offsets: IndexSet) {
         offsets.forEach { index in
-            let user = userVM.users[index + 1] // because of filtering
+            let user = userVM.users[index]
             print("attempting deletion of \(user.name!)")
             userVM.delete(user)
         }

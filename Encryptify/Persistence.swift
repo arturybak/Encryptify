@@ -19,6 +19,10 @@ struct PersistenceController {
         
     func getAllUsers() -> [User] {
         let request: NSFetchRequest<User> = User.fetchRequest()
+        request.predicate = NSPredicate(format: "isCurrentUser == NO")
+        let sort = NSSortDescriptor(key: #keyPath(User.lastMessage.date), ascending: false)
+        request.sortDescriptors = [sort]
+
         do {
             return try viewContext.fetch(request)
         } catch {
@@ -29,6 +33,9 @@ struct PersistenceController {
     func getConversation(with userId: UUID) -> [Message] {
         let request: NSFetchRequest<Message> = Message.fetchRequest()
         request.predicate = NSPredicate(format: "user.id == %@", userId as CVarArg)
+        let sort = NSSortDescriptor(key: #keyPath(Message.date), ascending: true)
+        request.sortDescriptors = [sort]
+        
         do {
             return try viewContext.fetch(request)
         } catch {
