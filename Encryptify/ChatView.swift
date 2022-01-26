@@ -41,6 +41,21 @@ struct ChatView: View {
                 }
                 .onAppear(perform: {fetchData()})
                 .navigationTitle(Text("Encryptify"))
+                .toolbar {
+//                    ToolbarItem(placement: .navigationBarLeading){
+//                        Text("Encryptify")
+//                            .font(.largeTitle)
+//                            .fontWeight(.bold)
+//                    }
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(action: {
+                            print("Button pressed")
+                        }, label: {
+                            Image(systemName: "gear.circle.fill")
+                                .font(.title)
+                        })
+                    }
+                }
                 .sheet(isPresented: $showingRegistrationForm, onDismiss: fetchData) {
                     UserRegistrationView(firstUser: userVM.currentUser == nil)
                 }

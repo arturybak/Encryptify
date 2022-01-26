@@ -44,7 +44,21 @@ struct ConversationView: View {
                         .listStyle(.plain)
                     }
                 }
-                .navigationBarTitle(Text(user.name!), displayMode: .inline)
+                //.navigationBarTitle(Text(user.name!), displayMode: .inline)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                            Text(user.name!).font(.headline)
+                        }
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(action: {
+                            print("Button pressed")
+                        }, label: {
+                            Image(systemName: "gear.circle.fill")
+                                .font(.title)
+                        })
+                    }
+                }
                 .onChange(of: messageVM.conversation.count) { _ in
                     withAnimation(.easeOut(duration: 0.5)) {
                         value.scrollTo("lastMessage")}

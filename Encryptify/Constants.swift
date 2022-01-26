@@ -30,6 +30,6 @@ struct K {
     }
     
     struct Colors {
-        static let gradient = LinearGradient(gradient: Gradient(colors: [Color.red, Color.orange]), startPoint: .leading, endPoint: .trailing)
+        static let gradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color.indigo]), startPoint: .leading, endPoint: .trailing)
     }
 }
