@@ -41,7 +41,8 @@ struct MessageShareView: View {
 
 func sharingSheet(share: String, messageId: Date) {
     //guard let urlShare = URL(string: share) else { return }
-    let urlShare = "\(share)\(messageId)" //appending id of length 36
+    let urlShare = "\(share).\(messageId)" //appending id of length 36
+    //let _ = print("split to: \(urlShare.components(separatedBy: "."))")
     let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
     let scenes = UIApplication.shared.connectedScenes
     let windowScene = scenes.first as? UIWindowScene
