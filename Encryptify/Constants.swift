@@ -17,7 +17,7 @@ struct K {
                 .padding(15)
                 .background(K.Colors.gradient)
                 .cornerRadius(15.0)
-                .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
+                //.scaleEffect(configuration.isPressed ? 1.1 : 1.0)
         }
     }
 

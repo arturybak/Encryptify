@@ -40,9 +40,14 @@ struct MessageShareView: View {
 }
 
 func sharingSheet(share: String, messageId: Date) {
-    //guard let urlShare = URL(string: share) else { return }
-    let urlShare = "\(share).\(messageId)" //appending id of length 36
-    //let _ = print("split to: \(urlShare.components(separatedBy: "."))")
+    let df = DateFormatter()
+    df.dateFormat = "yyyy-MM-dd.hh:mm:ssz"
+    let sentOn = df.string(from: messageId)
+    
+    let absoluteURL = "encryptify://message?share=\(share)&date=\(sentOn)"
+    let _ = print("sharing: \(absoluteURL)")
+    guard let urlShare = URL(string: absoluteURL) else { return }
+    //let urlShare = "\(share).\(messageId)" //appending id of length 36
     let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
     let scenes = UIApplication.shared.connectedScenes
     let windowScene = scenes.first as? UIWindowScene

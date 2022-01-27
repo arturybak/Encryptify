@@ -20,6 +20,7 @@
 		0F8ADCD927908AD200172A22 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCD827908AD200172A22 /* UserViewModel.swift */; };
 		0F8ADCDB2790B82000172A22 /* UserRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */; };
 		0F9F708B279B550200495807 /* MessageShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9F708A279B550200495807 /* MessageShareView.swift */; };
+		0FB43B9627A340DB0072290E /* MessageDecryptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB43B9527A340DB0072290E /* MessageDecryptView.swift */; };
 		0FB6B5C32791882A002C25DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6B5C22791882A002C25DF /* Constants.swift */; };
 		0FBBBEFE2799FF6A0087C971 /* GF256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBBEF82799FF6A0087C971 /* GF256.swift */; };
 		0FBBBEFF2799FF6A0087C971 /* PolyGF256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBBBEFA2799FF6A0087C971 /* PolyGF256.swift */; };
@@ -42,6 +43,8 @@
 		0F8ADCD827908AD200172A22 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistrationView.swift; sourceTree = "<group>"; };
 		0F9F708A279B550200495807 /* MessageShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareView.swift; sourceTree = "<group>"; };
+		0FB43B9427A2B92C0072290E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0FB43B9527A340DB0072290E /* MessageDecryptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDecryptView.swift; sourceTree = "<group>"; };
 		0FB6B5C22791882A002C25DF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FBBBEF82799FF6A0087C971 /* GF256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GF256.swift; sourceTree = "<group>"; };
 		0FBBBEFA2799FF6A0087C971 /* PolyGF256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyGF256.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		0F46E51D274EA4F100912479 /* Encryptify */ = {
 			isa = PBXGroup;
 			children = (
+				0FB43B9427A2B92C0072290E /* Info.plist */,
 				0F7DBBA0274FAC8100F50EA9 /* Main.xcdatamodeld */,
 				0FBBBEF72799FF6A0087C971 /* SSS */,
 				0F46E530274EAA4800912479 /* MessageView.swift */,
@@ -88,6 +92,7 @@
 				0F8ADCDA2790B82000172A22 /* UserRegistrationView.swift */,
 				0FB6B5C22791882A002C25DF /* Constants.swift */,
 				0F46E51E274EA4F100912479 /* EncryptifyApp.swift */,
+				0FB43B9527A340DB0072290E /* MessageDecryptView.swift */,
 				0F7DBBCA274FB64D00F50EA9 /* Persistence.swift */,
 				0F8ADCD827908AD200172A22 /* UserViewModel.swift */,
 				0F43FA382792279200F2465E /* MessageViewModel.swift */,
@@ -189,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F43FA392792279200F2465E /* MessageViewModel.swift in Sources */,
+				0FB43B9627A340DB0072290E /* MessageDecryptView.swift in Sources */,
 				0F7DBBA2274FAC8100F50EA9 /* Main.xcdatamodeld in Sources */,
 				0F8ADCD927908AD200172A22 /* UserViewModel.swift in Sources */,
 				0F7DBBCB274FB64D00F50EA9 /* Persistence.swift in Sources */,
@@ -337,6 +343,7 @@
 				DEVELOPMENT_TEAM = R68RQUUM59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Encryptify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -366,6 +373,7 @@
 				DEVELOPMENT_TEAM = R68RQUUM59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Encryptify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
