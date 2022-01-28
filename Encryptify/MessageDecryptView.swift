@@ -13,6 +13,9 @@ struct MessageDecryptView: View {
     var share: String?
     var sentOn: String?
     
+    @ObservedObject private var userVM = UserViewModel()
+
+    
     init(url: URL) {
         input = url
         components = URLComponents(
@@ -25,13 +28,52 @@ struct MessageDecryptView: View {
     
     
     var body: some View {
-        VStack {
-            Text("Share is: \(share!)")
-            Text("Date is : \(getDateFromString(sentOn!) ?? Date())")
+        NavigationView {
+            VStack() {
+                Text("Which conversation?")
+                    .font(.title)
+                ContentMessageView(contentMessage: share!, isCurrentUser: false)
+                HStack {
+                    Text(getDateFromString(sentOn!)!, style: .date)
+                    Text(getDateFromString(sentOn!)!, style: .time)
+                }.foregroundColor(Color.gray)
+                List{
+                    ForEach(userVM.users) { user in
+                            Button(action: {
+                                print("Button pressed")
+                            }, label: {
+                                HStack(spacing: 15) {
+                                    Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
+                                        .resizable()
+                                        .frame(width: 45, height: 45)
+                                        .clipShape(Circle())
+
+                                    VStack(alignment: .leading) {
+                                        Text(user.name ?? "no users")
+                                            .font(.headline)
+                                    }
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity)
+                            })
+                            .padding([.leading, .trailing])
+                            .buttonStyle(K.GradientButtonStyle())
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    
+                }
+            }
+            .onAppear(perform: {fetchData()})
+            .navigationTitle(Text("Share Message"))
         }
-        let _ = print("components are: \(components.queryItems!)")
     }
     
+    func fetchData() {
+        userVM.getAllUsers()
+        userVM.getCurrentUser()
+    }
+
     func getDateFromString(_ dateAsString: String) -> Date? {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd.hh:mm:ssz"
@@ -39,7 +81,7 @@ struct MessageDecryptView: View {
     }
     
     func getQueryStringParameter(url: URLComponents, param: String) -> String? {
-      return url.queryItems?.first(where: { $0.name == param })?.value
+        url.queryItems?.first(where: { $0.name == param })?.value
     }
 }
 

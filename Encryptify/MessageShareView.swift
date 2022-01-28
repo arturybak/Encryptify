@@ -47,7 +47,6 @@ func sharingSheet(share: String, messageId: Date) {
     let absoluteURL = "encryptify://message?share=\(share)&date=\(sentOn)"
     let _ = print("sharing: \(absoluteURL)")
     guard let urlShare = URL(string: absoluteURL) else { return }
-    //let urlShare = "\(share).\(messageId)" //appending id of length 36
     let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
     let scenes = UIApplication.shared.connectedScenes
     let windowScene = scenes.first as? UIWindowScene
