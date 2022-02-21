@@ -27,6 +27,8 @@ struct ConversationView: View {
                     } else {
                         List {
                             ForEach(messageVM.conversation) { msg in
+                                //let _ = print("message: \(msg.content!) numShares: \(msg.sharesSoFar)")
+                                let _ = print("message: \(msg.content!) sentOn: \(msg.date!)")
                                 ZStack {
                                     MessageView(currentMessage: msg)
                                     if msg.isSender {
@@ -73,6 +75,7 @@ struct ConversationView: View {
             }
         .onAppear(perform: {
             userVM.getCurrentUser()
+            messageVM.decryptCompleteShares()
             messageVM.getConversation(with: user.id!)
         })
     }

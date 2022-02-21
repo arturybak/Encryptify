@@ -76,7 +76,7 @@ struct MessageDecryptView: View {
         messageVM.user = user
         
         let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd.hh:mm:ssz"
+        df.dateFormat = K.SecretSharing.dateFormat
         let date = df.date(from: sentOn!)!
         messageVM.save(isSender: false, date: date)
         messageVM.getConversation(with: user.id!)
@@ -90,7 +90,7 @@ struct MessageDecryptView: View {
 
     func getDateFromString(_ dateAsString: String) -> Date? {
         let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd.hh:mm:ssz"
+        df.dateFormat = K.SecretSharing.dateFormat
         return df.date(from: dateAsString)
     }
     

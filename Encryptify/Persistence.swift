@@ -68,6 +68,17 @@ struct PersistenceController {
         return try? viewContext.fetch(request)
     }
     
+    func getCompleteShares() -> [Message] {
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        request.predicate = NSPredicate(format: "sharesSoFar >= %i", Int16(K.SecretSharing.threshold))
+        // request.predicate = NSPredicate.init(format: "sharesSoFar == neededNumOfShares")
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            return []
+        }
+    }
+    
     func deleteUser(user: User) {
         print("persistence - deleting \(user.name!)")
         viewContext.delete(user)

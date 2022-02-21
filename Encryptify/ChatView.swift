@@ -49,7 +49,8 @@ struct ChatView: View {
 //                    }
                     ToolbarItem(placement: .primaryAction) {
                         Button(action: {
-                            print("Button pressed")
+                            //print("Button pressed")
+                            testSSS()
                         }, label: {
                             Image(systemName: "gear.circle.fill")
                                 .font(.title)
@@ -95,6 +96,20 @@ struct ChatView: View {
         }
     }
     
+    private func testSSS() {
+        let share1 = "1-38649008064e1b7ed34beb02a90adab4bf88aabf"
+        let share2 = "2-a86785adafff56000cf6518ffda91e13f9a4daf9"
+        let share3 = "3-d8667fcec8906d2ab09dcef438c8ab8732490332"
+
+        let sharesStings = [share1, share2, share3]
+        let sharesObjects = sharesStings.compactMap { try? Secret.Share(string: $0) }
+        let someShares = [Secret.Share](sharesObjects)
+
+        let secretData = try!  Secret.combine(shares: someShares)
+        let secret = String(data: secretData, encoding: .utf8)
+        print("decode is: \(secret ?? "not working")")
+    }
+
     func timeAgo(since: Date) -> String {
         let formatter = DateComponentsFormatter()
         formatter.includesApproximationPhrase = false

@@ -40,8 +40,9 @@ struct MessageShareView: View {
 }
 
 func sharingSheet(share: String, messageId: Date) {
+    //let _ = print("creating a share with date: \(messageId)")
     let df = DateFormatter()
-    df.dateFormat = "yyyy-MM-dd.hh:mm:ssz"
+    df.dateFormat = K.SecretSharing.dateFormat
     let sentOn = df.string(from: messageId)
     
     let absoluteURL = "encryptify://message?share=\(share)&date=\(sentOn)"

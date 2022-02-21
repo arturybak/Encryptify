@@ -24,6 +24,7 @@ struct K {
     struct SecretSharing {
         static let threshold = 2
         static let shares = 3
+        static let dateFormat = "yyyy-MM-dd.HH:mm:ssz"
     }
     struct Avatars {
         static let defaultAvatar = UIImage(named: "default")!.jpegData(compressionQuality: 1.0)

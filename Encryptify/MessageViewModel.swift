@@ -23,6 +23,28 @@ class MessageViewModel: ObservableObject {
         conversation = PersistenceController.shared.getConversation(with: userID)
     }
     
+    func decryptCompleteShares() {
+        let shareSet = PersistenceController.shared.getCompleteShares()
+        for shares in shareSet {
+            let shareArray = shares.content!.split(separator: ".")
+            let sharesObjects = shareArray.compactMap { try? Secret.Share(string: String($0)) }
+            let sharesCasted = [Secret.Share](sharesObjects)
+
+            let secretData = try!  Secret.combine(shares: sharesCasted)
+            let secret = String(data: secretData, encoding: .utf8)
+            print("identified a complete secret: \(secret ?? "not working")")
+            
+            let message = Message(context: PersistenceController.shared.viewContext)
+            message.content = secret
+            message.date = shares.date
+            message.user = shares.user
+            message.isSender = false
+            message.id = UUID()
+
+            PersistenceController.shared.deleteMessage(message: shares)
+        }
+    }
+    
     func delete(_ message: Message){
         if message == conversation.last {
             if conversation.count > 1 {
