@@ -29,10 +29,12 @@ struct ConversationView: View {
                             ForEach(messageVM.conversation) { msg in
                                 ZStack {
                                     MessageView(currentMessage: msg)
-                                    NavigationLink(destination: MessageShareView(message: msg)) {
-                                        EmptyView()
+                                    if msg.isSender {
+                                        NavigationLink(destination: MessageShareView(message: msg)) {
+                                            EmptyView()
+                                        }
+                                        .opacity(0)
                                     }
-                                    .opacity(0)
                                 }
                                 .listRowSeparator(.hidden)
                                 .if(msg == messageVM.conversation.last)
@@ -104,7 +106,7 @@ struct ConversationView: View {
         messageVM.content = typingMessage
         messageVM.user = user
         
-        messageVM.save(isSender: true)
+        messageVM.save(isSender: true, date: Date())
         messageVM.getConversation(with: user.id!)
         typingMessage = ""
 

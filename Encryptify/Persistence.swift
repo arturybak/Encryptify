@@ -48,11 +48,24 @@ struct PersistenceController {
         let request: NSFetchRequest<User> = User.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSPredicate(format: "isCurrentUser == YES")
-        do {
-            return try viewContext.fetch(request).first
-        } catch {
-            return nil
-        }
+        return try? viewContext.fetch(request).first
+
+//        do {
+//            return try viewContext.fetch(request).first
+//        } catch {
+//            return nil
+//        }
+    }
+    
+    func checkIfShareExists(date: Date, userId: UUID) -> [Message]? {
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        let predicate1 = NSPredicate(format: "date == %@", date as NSDate)
+        let predicate2 = NSPredicate(format: "isSender == NO")
+        let predicate3 = NSPredicate(format: "user.id == %@", userId as CVarArg)
+
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2, predicate3])
+        
+        return try? viewContext.fetch(request)
     }
     
     func deleteUser(user: User) {

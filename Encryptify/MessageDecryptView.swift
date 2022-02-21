@@ -14,6 +14,8 @@ struct MessageDecryptView: View {
     var sentOn: String?
     
     @ObservedObject private var userVM = UserViewModel()
+    @ObservedObject private var messageVM = MessageViewModel()
+    @Environment (\.presentationMode) var presentationMode
 
     
     init(url: URL) {
@@ -40,7 +42,7 @@ struct MessageDecryptView: View {
                 List{
                     ForEach(userVM.users) { user in
                             Button(action: {
-                                print("Button pressed")
+                                saveShare(user: user)
                             }, label: {
                                 HStack(spacing: 15) {
                                     Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
@@ -69,6 +71,18 @@ struct MessageDecryptView: View {
         }
     }
     
+    private func saveShare(user: User) {
+        messageVM.content = share!
+        messageVM.user = user
+        
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd.hh:mm:ssz"
+        let date = df.date(from: sentOn!)!
+        messageVM.save(isSender: false, date: date)
+        messageVM.getConversation(with: user.id!)
+        presentationMode.wrappedValue.dismiss()
+    }
+
     func fetchData() {
         userVM.getAllUsers()
         userVM.getCurrentUser()
