@@ -20,6 +20,7 @@ class MessageViewModel: ObservableObject {
     //@Published var lastMessage: Message? = nil
 
     func getConversation(with userID: UUID) {
+        let _ = print("getting conversation with: \(userID)")
         conversation = PersistenceController.shared.getConversation(with: userID)
     }
     
@@ -40,6 +41,10 @@ class MessageViewModel: ObservableObject {
             message.user = shares.user
             message.isSender = false
             message.id = UUID()
+            
+            if shares.user!.lastMessage == nil || shares.user!.lastMessage!.date! < message.date! {
+                shares.user!.lastMessage = message
+            }
 
             PersistenceController.shared.deleteMessage(message: shares)
         }

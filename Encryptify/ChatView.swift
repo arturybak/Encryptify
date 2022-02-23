@@ -17,6 +17,7 @@ struct ChatView: View {
         NavigationView {
                 VStack {
                     if userVM.users.isEmpty {
+                        let _ = print("displaying chat, users empty")
                         if userVM.currentUser == nil {
                             Spacer()
                             Text("First time?")
@@ -32,6 +33,7 @@ struct ChatView: View {
                                 .foregroundColor(.gray)
                         }
                     } else {
+                        let _ = print("displaying list of users:")
                         conversationList
                         //Spacer()
                     }
@@ -66,6 +68,7 @@ struct ChatView: View {
     private var conversationList: some View {
         List{
             ForEach(userVM.users) { user in
+                let _ = print("displaying \(user.name ?? "noname")")
                 NavigationLink(destination: ConversationView(user: user)) {
                     HStack(spacing: 15) {
                         Image(uiImage: UIImage(data: (user.avatar ?? K.Avatars.defaultAvatar)!)!)
