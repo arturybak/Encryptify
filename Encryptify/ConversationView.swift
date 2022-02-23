@@ -30,7 +30,7 @@ struct ConversationView: View {
                                 //let _ = print("message: \(msg.content!) numShares: \(msg.sharesSoFar)")
                                 let _ = print("message: \(msg.content!) sentOn: \(msg.date!)")
                                 ZStack {
-                                    MessageView(currentMessage: msg)
+                                    MessageView(msg: msg)
                                     if msg.isSender {
                                         NavigationLink(destination: MessageShareView(message: msg)) {
                                             EmptyView()

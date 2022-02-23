@@ -9,11 +9,11 @@ import SwiftUI
 import CoreData
 
 struct MessageView : View {
-    var currentMessage: Message
+    var msg: Message
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
-                if !currentMessage.isSender {
-                    Image(uiImage: UIImage(data: (currentMessage.user?.avatar ?? K.Avatars.defaultAvatar)!)!)
+                if !msg.isSender {
+                    Image(uiImage: UIImage(data: (msg.user?.avatar ?? K.Avatars.defaultAvatar)!)!)
                         .resizable()
                         .frame(width: 40, height: 40, alignment: .center)
                         .cornerRadius(20)
@@ -21,8 +21,8 @@ struct MessageView : View {
                     Spacer()
                 }
                 
-            ContentMessageView(contentMessage: currentMessage.content ?? "",
-                                   isCurrentUser: currentMessage.isSender)
+            ContentMessageView(contentMessage: (!msg.isSender && msg.neededNumOfShares > 0 ? "ENCRYPTED. Need \(msg.neededNumOfShares - msg.sharesSoFar) more shares to decrypt" : msg.content ?? "")!,
+                                   isCurrentUser: msg.isSender)
                 //.padding(.horizontal, 7)
         }
 
@@ -49,7 +49,7 @@ struct MessageView_Previews: PreviewProvider {
         
         user1.lastMessage = newMessage
         
-        return MessageView(currentMessage: newMessage)
+        return MessageView(msg: newMessage)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 
     }
