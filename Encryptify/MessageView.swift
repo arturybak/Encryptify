@@ -11,7 +11,8 @@ import CoreData
 struct MessageView : View {
     var msg: Message
     var body: some View {
-        HStack(alignment: .bottom, spacing: 10) {
+        VStack(alignment: .trailing) {
+            HStack(alignment: .bottom, spacing: 10) {
                 if !msg.isSender {
                     Image(uiImage: UIImage(data: (msg.user?.avatar ?? K.Avatars.defaultAvatar)!)!)
                         .resizable()
@@ -21,8 +22,17 @@ struct MessageView : View {
                     Spacer()
                 }
                 
-            ContentMessageView(contentMessage: (!msg.isSender && msg.neededNumOfShares > 0 ? "ENCRYPTED. Need \(msg.neededNumOfShares - msg.sharesSoFar) more shares to decrypt" : msg.content ?? "")!,
-                                   isCurrentUser: msg.isSender)
+                ContentMessageView(contentMessage: (!msg.isSender && msg.neededNumOfShares > 0 ? "ENCRYPTED. Need \(msg.neededNumOfShares - msg.sharesSoFar) more shares to decrypt" : msg.content ?? "")!,
+                                       isCurrentUser: msg.isSender)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            Text(msg.date!, style: .time).font(.footnote).foregroundColor(Color.gray)
+
+//            HStack {
+//                Text(msg.date!, style: .date)
+//                Text(msg.date!, style: .time)
+//            }.foregroundColor(Color.gray)
+
                 //.padding(.horizontal, 7)
         }
 
