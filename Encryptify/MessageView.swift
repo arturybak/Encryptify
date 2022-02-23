@@ -26,16 +26,11 @@ struct MessageView : View {
                                        isCurrentUser: msg.isSender)
             }
             .fixedSize(horizontal: false, vertical: true)
-            Text(msg.date!, style: .time).font(.footnote).foregroundColor(Color.gray)
-
-//            HStack {
-//                Text(msg.date!, style: .date)
-//                Text(msg.date!, style: .time)
-//            }.foregroundColor(Color.gray)
-
+            let formatter = RelativeDateTimeFormatter()
+            Text(formatter.localizedString(for: msg.date!, relativeTo: Date()))
+                .font(.footnote).foregroundColor(Color.gray)
                 //.padding(.horizontal, 7)
         }
-
     }
 }
 
