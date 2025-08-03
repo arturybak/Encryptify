@@ -16,6 +16,15 @@ Rather than trusting a single IM provider with your privacy, Encriptify splits e
 
 ---
 
+## User Interface
+### Generating and Distributing Shares
+<img width="814" height="613" alt="SCR-20250803-rpxi" src="https://github.com/user-attachments/assets/ad3e6f4e-5fc2-4bcc-b498-f0073b9860e4" />
+
+### Aggregating and Decrypting Shares
+<img width="821" height="618" alt="SCR-20250803-rpyu" src="https://github.com/user-attachments/assets/5002f1f4-5b3b-4149-8d37-fa41359858a5" />
+
+---
+
 ## Requirements
 
 - iOS 14.0 or later  
